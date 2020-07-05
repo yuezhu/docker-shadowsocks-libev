@@ -27,10 +27,8 @@ RUN \
     xmlto \
     wget \
     gzip \
-    tar
-
-RUN \
-    wget -O- "https://github.com/shadowsocks/shadowsocks-libev/releases/download/v${SHADOWSOCKS_LIBEV_VER}/shadowsocks-libev-${SHADOWSOCKS_LIBEV_VER}.tar.gz" | tar xvzf - \
+    tar \
+    && wget -O- "https://github.com/shadowsocks/shadowsocks-libev/releases/download/v${SHADOWSOCKS_LIBEV_VER}/shadowsocks-libev-${SHADOWSOCKS_LIBEV_VER}.tar.gz" | tar xvzf - \
     && cd "shadowsocks-libev-${SHADOWSOCKS_LIBEV_VER}" \
     && ./configure \
     && make install \
