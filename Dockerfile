@@ -4,22 +4,18 @@ RUN \
     apk update \
     && apk add --no-cache git \
     && mkdir /build \
-    && git clone https://github.com/shadowsocks/v2ray-plugin.git /build
-
-WORKDIR /build
-
-RUN go build -o v2ray-plugin_linux_amd64 .
+    && git clone https://github.com/shadowsocks/v2ray-plugin.git /build \
+    && cd /build \
+    && go build -o v2ray-plugin
 
 FROM shadowsocks/shadowsocks-libev
 
 ARG SSL_CERT_GID=115
 
-VOLUME /config
-
 ENV TZ=UTC
 ENV ARGS=
 
-COPY --from=builder /build/v2ray-plugin_linux_amd64 /usr/bin/v2ray-plugin
+COPY --from=builder /build/v2ray-plugin /usr/bin/v2ray-plugin
 
 USER root
 
@@ -33,4 +29,7 @@ RUN \
 
 USER nobody:ssl-cert
 
-CMD exec /usr/bin/ss-server -n 65535 -c /config/config.json -u $ARGS
+CMD exec /usr/bin/ss-server \
+    -n 65535 \
+    -c /config.json \
+    -u $ARGS
