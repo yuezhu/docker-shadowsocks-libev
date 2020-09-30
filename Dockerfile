@@ -8,7 +8,7 @@ RUN \
     && cd /build \
     && go build -o v2ray-plugin
 
-FROM shadowsocks/shadowsocks-libev
+FROM shadowsocks/shadowsocks-libev:edge
 
 ARG SSL_CERT_GID=115
 

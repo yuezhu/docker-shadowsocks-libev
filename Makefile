@@ -3,6 +3,7 @@
 TAG := latest
 
 build:
+	docker pull shadowsocks/shadowsocks-libev:edge
 	docker build -t yuezhu/shadowsocks-libev:$(TAG) .
 
 push:
